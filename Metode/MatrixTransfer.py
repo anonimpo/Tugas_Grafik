@@ -63,7 +63,11 @@ class TransferMatrixMethod_V2:
         
         return psi, A, B
 
-    def transmission_reflection_coefficients(self, potential):
+    def transmission_reflection_coefficients0(self,potential):
+        M_total=self.total_transfer_matrix(self, potential)
+        T = 1/np.abs(M_total[0,0])
+
+    def transmission_reflection_coefficients1(self, potential):
         M_total = self.total_transfer_matrix(potential)
         T1 = 1 / np.abs(M_total[0, 0])**2
         R1 = np.abs(M_total[1, 0] / M_total[0, 0])**2
