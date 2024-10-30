@@ -43,6 +43,13 @@ class Potential:
             plt.xlabel("x")
             plt.ylabel("V(x)")
             plt.legend(["V(x)","E(x)"])
+        
+        def plot_subplots(self,ax):
+            ax.plot(self.parent.x, self.get_potential())
+            ax.plot(self.parent.x, self.parent.E*np.ones(len(self.parent.x)))
+            ax.set_title("Step Potential vs x")
+            ax.set_xlabel("x")
+            ax.set_ylabel("V(x)")
 
     class PotentialBarrier:
         def __init__(self, parent, V_max =1, V_min=-1, width=1/3):
@@ -85,14 +92,12 @@ class Potential:
             plt.xlabel("x")
             plt.ylabel("V(x)")
 
-        def plot_VEk(self):
-            plt.plot(self.parent.x, self.get_potential())
-            plt.plot(self.parent.x, self.get_wavevector())
-            plt.plot(self.parent.x, self.parent.E*np.ones(len(self.parent.x)))
-            plt.title("Potential Barrier")
-            plt.xlabel("x")
-            plt.ylabel("V(x)")
-            plt.legend(["V(x)","k(x)","E(x)"])
+        def plot_subplots(self,ax):
+            ax.plot(self.parent.x, self.get_potential())
+            ax.plot(self.parent.x, self.parent.E*np.ones(len(self.parent.x)))
+            ax.set_title("Potential Barrier vs x")
+            ax.set_xlabel("x")
+            ax.set_ylabel("V(x)")
 
     class MorseFeshbach:
         def __init__(self, parent, V_0=2.5, d=1, x_0=0, mu=0.2,V_off=0):
@@ -126,6 +131,13 @@ class Potential:
             plt.xlabel("x")
             plt.ylabel("V(x)")
             plt.legend(["V(x)","E(x)"])
+
+        def plot_subplots(self,ax):
+            ax.plot(self.parent.x, self.get_potential())
+            ax.plot(self.parent.x, self.parent.E*np.ones(len(self.parent.x)))
+            ax.set_title("Morse-Feshbach Potential vs x")
+            ax.set_xlabel("x")
+            ax.set_ylabel("V(x)")
 
 
     class Other:

@@ -13,8 +13,8 @@ Vmax = 10
 
 call = Potential(N=N,a=a,E=E,m=m,h=h)
 Potential_Barrier= call.PotentialBarrier(call,V_max=Vmax, V_min=0, width=1/3)
-Step_Potential= call.StepPotential(call,V_max=Vmax,V_min=0)
-Morse_Feshbach= call.MorseFeshbach(call,V_0=Vmax,d=1,x_0=0,mu=0.2)
+Step_Potential = call.StepPotential(call,V_max=Vmax,V_min=0)
+Morse_Feshbach = call.MorseFeshbach(call,V_0=Vmax,d=1,x_0=0,mu=0.2)
 
 Metode_Analitik = AnalyticalMethod_V2(m,h,E)            # masih kurang benar di plot_wavefunction 
 Metode_MatrikTransfer =TransferMatrixMethod_V2(m,h,E)   # masih tidak yakin
@@ -28,8 +28,8 @@ def plot(potential):
 #plot(Potential_Barrier)
 
 #menghitung koefisien Transmisi dan Refleksi 
-T_Analitik,R_Analitik=Metode_Analitik.transmission_reflection_coefficients(Potential_Barrier)  # baru potential penghalang yang sudah di cek
-T_MatrikTransfer,R_MatrikTransfer=Metode_MatrikTransfer.transmission_reflection_coefficients(Potential_Barrier)[1:]
+T_Analitik,R_Analitik = Metode_Analitik.transmission_reflection_coefficients(Potential_Barrier)  # baru potential penghalang yang sudah di cek
+T_MatrikTransfer,R_MatrikTransfer = Metode_MatrikTransfer.transmission_reflection_coefficients(Potential_Barrier)[1:]
 #T_GF,R_GF= Metode_GreenFunction.transmission_reflection_coefficients() belum ada
 
 print (T_Analitik)
