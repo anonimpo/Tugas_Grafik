@@ -11,6 +11,7 @@ class AnalyticalMethod_V2:
         self.E = E
 
     def wave_numbers(self, V):
+        k = V.get_wavevector()
         k1 = np.lib.scimath.sqrt(2 * self.m * self.E) / self.h
         k2 = np.lib.scimath.sqrt(2 * self.m * (self.E - V)) / self.h
         return k1, k2

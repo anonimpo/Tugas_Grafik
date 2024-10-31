@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Potential:
-    def __init__(self, N=100, a=6, E=80, m=1, h=1):
+    def __init__(self, N=100, a=6, E=8, m=1, h=1):
         self.N = N  # Number of points
         self.a = a  # Range for x
         self.E = E  # Energy
@@ -140,16 +140,35 @@ class Potential:
             ax.set_ylabel("V(x)")
 
 
-    class Other:
-        def __init__(self, parent,f,*arg):
-            self.parent = parent
-            self.f = f
+# initiate the wavefunction 
+from numpy import exp,sum,abs,sqrt,real,imag
 
-        def get_potential(self,x):
-            return self.f
-        def get_wavevector(self):
-            V = self.get_potential()
-            k_array = np.array([
-                np.lib.scimath.sqrt(2 * self.parent.m * (self.parent.E - V) / self.parent.h**2)
-                for x in self.parent.x ])
-            return k_array
+class intial_wavefunction:
+    def __init__(self,N=100,a=6,E=8):
+        self.N = N
+        self.a = a
+
+    def gasussian_wavepacket(self,V,x0=0,variance=0.02):
+        """the initial wavefunction have a form of gaussian wave packet"""
+        def len_x0(x0)->int:
+            if abs(x0) > self.a:raise ValueError("x0 must be in the range of the system")
+            else:len_x0 = round((1+x0/self.a)*self.N/2)
+            return len_x0
+
+        k0= V.get_wavevector()[len_x0(x0)]
+        x = V.parent.x
+        dx= x[1]-x[0]
+
+        Psi_0 = exp(-(x[1:-1]-x0)**2/variance**2 )*exp(1j*k0*x[1:-1])
+        normalize = sqrt(sum(abs(Psi_0)**2*dx))
+        Psi_0 = Psi_0/normalize
+        return Psi_0
+    
+    def plot(self,V,Psi_0):
+        x = V.parent.x
+        plt.plot(x[1:-1],real(Psi_0))
+        plt.plot(x[1:-1],imag(Psi_0),"--")
+        plt.plot(x[1:-1],abs(Psi_0)**2)
+        plt.xlabel("x")
+        plt.ylabel("Psi")
+        plt.legend(["real","imaginary","probability"])
