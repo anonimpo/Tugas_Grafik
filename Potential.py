@@ -27,7 +27,10 @@ class Potential:
 
         def get_wavevector(self):
             V = self.get_potential()
-            k_array = np.lib.scimath.sqrt(2 * self.parent.m * (self.parent.E - V) / self.parent.h**2)
+            k_array = np.zeros_like(V, dtype=np.complex128)  # Fix: use complex128 instead of complex
+            for i in range(len(V)):
+                # Calculate k = sqrt(2m(E-V))/ℏ
+                k_array[i] = np.sqrt(2.0 * self.parent.m * (self.parent.E - V[i]) + 0j) / self.parent.h
             return k_array
 
         def plot(self):
@@ -67,9 +70,14 @@ class Potential:
         def get_potential(self):
             return np.array([self.boundary_condition(n) for n in range(self.parent.N + 1)])
 
+        # In Potential.py, update the get_wavevector method:
+
         def get_wavevector(self):
             V = self.get_potential()
-            k_array = np.lib.scimath.sqrt(2 * self.parent.m * (self.parent.E - V) / self.parent.h**2)
+            k_array = np.zeros_like(V, dtype=np.complex128)  # Fix: use complex128 instead of complex
+            for i in range(len(V)):
+                # Calculate k = sqrt(2m(E-V))/ℏ
+                k_array[i] = np.sqrt(2.0 * self.parent.m * (self.parent.E - V[i]) + 0j) / self.parent.h
             return k_array
 
         def plot(self):
@@ -115,7 +123,10 @@ class Potential:
 
         def get_wavevector(self):
             V = self.get_potential()
-            k_array = np.lib.scimath.sqrt(2 * self.parent.m * (self.parent.E - V) / self.parent.h**2)
+            k_array = np.zeros_like(V, dtype=np.complex128)  # Fix: use complex128 instead of complex
+            for i in range(len(V)):
+                # Calculate k = sqrt(2m(E-V))/ℏ
+                k_array[i] = np.sqrt(2.0 * self.parent.m * (self.parent.E - V[i]) + 0j) / self.parent.h
             return k_array
 
         def plot(self):

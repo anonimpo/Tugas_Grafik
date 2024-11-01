@@ -1,0 +1,60 @@
+#contoh fortran
+
+
+import numpy as np
+
+# Constants and parameters
+zi = 1j                           # Complex unit in Python
+n = 5000                          # Number of spatial points
+n_e = 200                         # Number of energy levels
+xl = -15.0                        # Lower bound of x
+xu = 15.0                         # Upper bound of x
+h2m = 0.5                         # Constant factor
+
+# Step size in x direction
+h = (xu - xl) / (n + 1)
+
+# Define the potential function (replace with actual potential)
+def potential(x):
+    # Placeholder: zero potential everywhere
+    return 0.0 + 0.0j
+
+# Loop over different energy levels
+for i in range(1, n_e + 1):
+    V = potential(xu)               # Potential at the upper bound of x
+    E = 0.5 * i                     # Energy level
+    ec = (E - V) / h2m
+    k0 = np.sqrt(ec)                # Initial wavevector k0
+
+    # Initial conditions for coefficients ap and bp
+    ap = 1.0 + 0.0j                 # Complex number (1.0, 0.0)
+    bp = 0.0 + 0.0j                 # Complex number (0.0, 0.0)
+
+    # Loop over spatial points from n to 0 (reverse loop)
+    for j in range(n, -1, -1):
+        x = xl + j * h              # Current position
+        V = potential(x)            # Potential at x
+        xp = x + h                  # Next position
+        Vp = potential(xp)          # Potential at xp
+        
+        # Calculate k and kp based on the potential at x and xp
+        ec = (E - V) / h2m
+        k = np.sqrt(ec)
+        
+        ec = (E - Vp) / h2m
+        kp = np.sqrt(ec)
+
+        # Update coefficients a and b
+        a = 0.5 * (ap * (1.0 + kp / k) * np.exp(zi * kp * x) +
+                   bp * (1.0 - kp / k) * np.exp(-zi * kp * x)) * np.exp(-zi * k * x)
+        
+        b = 0.5 * (ap * (1.0 - kp / k) * np.exp(zi * kp * x) +
+                   bp * (1.0 + kp / k) * np.exp(-zi * kp * x)) * np.exp(zi * k * x)
+        
+        # Update previous coefficients for the next iteration
+        ap = a
+        bp = b
+
+    # Calculate the transmission coefficient T = |b / a|^2 and print it for this energy
+    transmission = abs(b / a)**2
+    print(f"Energy: {E}, Transmission: {transmission}")
